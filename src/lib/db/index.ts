@@ -2,13 +2,29 @@ import Database from 'better-sqlite3';
 import path from 'path';
 import fs from 'fs';
 
-// Ensure data directory exists
-const dataDir = path.join(process.cwd(), 'data');
-if (!fs.existsSync(dataDir)) {
-  fs.mkdirSync(dataDir, { recursive: true });
+// Ensure data directory exists (support Vercel serverless /tmp writable storage)
+const isVercel = process.env.VERCEL === '1' || process.env.NODE_ENV === 'production' && Boolean(process.env.AWS_LAMBDA_FUNCTION_NAME);
+let dbPath: string;
+
+if (isVercel) {
+  const tmpDir = '/tmp';
+  dbPath = path.join(tmpDir, 'shift.db');
+  const sourceDb = path.join(process.cwd(), 'data', 'shift.db');
+  if (!fs.existsSync(dbPath) && fs.existsSync(sourceDb)) {
+    try {
+      fs.copyFileSync(sourceDb, dbPath);
+    } catch (e) {
+      console.error('Failed to copy initial db to /tmp on Vercel:', e);
+    }
+  }
+} else {
+  const dataDir = path.join(process.cwd(), 'data');
+  if (!fs.existsSync(dataDir)) {
+    fs.mkdirSync(dataDir, { recursive: true });
+  }
+  dbPath = path.join(dataDir, 'shift.db');
 }
 
-const dbPath = path.join(dataDir, 'shift.db');
 export const db = new Database(dbPath);
 
 // Enable WAL mode and foreign keys for high performance and integrity
