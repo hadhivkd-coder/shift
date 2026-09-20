@@ -6,9 +6,6 @@ import {
   Droplets,
   Moon,
   Footprints,
-  Utensils,
-  Plus,
-  Scale,
   Calendar,
   CheckCircle2,
   AlertCircle,
@@ -19,15 +16,17 @@ export default function TrackPage() {
   const [data, setData] = useState<any>(null);
   const [checkins, setCheckins] = useState<any[]>([]);
   const [isCheckInOpen, setIsCheckInOpen] = useState(false);
-  const [waterMl, setWaterMl] = useState(2500);
+  const [waterMl, setWaterMl] = useState<number | null>(null);
 
   async function loadData() {
     try {
       const res = await fetch('/api/auth/me');
       const json = await res.json();
       setData(json);
-      if (json.todaysCheckin?.water_ml) {
+      if (json.todaysCheckin && json.todaysCheckin.water_ml != null) {
         setWaterMl(json.todaysCheckin.water_ml);
+      } else {
+        setWaterMl(null);
       }
 
       // Fetch export/history for checkins
@@ -46,7 +45,8 @@ export default function TrackPage() {
   }, []);
 
   async function addWater(amount: number) {
-    const newWater = Math.max(500, waterMl + amount);
+    const current = waterMl || 0;
+    const newWater = current + amount;
     setWaterMl(newWater);
     try {
       await fetch('/api/checkin', {
@@ -56,10 +56,13 @@ export default function TrackPage() {
           waterMl: newWater,
         }),
       });
+      loadData();
     } catch (err) {
       console.error('Failed to update water:', err);
     }
   }
+
+  const hasCheckinToday = Boolean(data?.todaysCheckin);
 
   return (
     <div className="px-4 sm:px-8 max-w-5xl mx-auto py-6 sm:py-8 space-y-8">
@@ -80,7 +83,7 @@ export default function TrackPage() {
           className="px-5 py-2.5 rounded-2xl bg-[#D8F224] text-black font-black text-xs hover:scale-105 active:scale-95 transition-all shadow-[0_0_20px_rgba(216,242,36,0.25)] flex items-center gap-2"
         >
           <Clock className="w-4 h-4" />
-          <span>Complete 60s Check-in</span>
+          <span>{hasCheckinToday ? 'Update Today\'s Check-in' : 'Complete 60s Check-in'}</span>
         </button>
       </div>
 
@@ -95,9 +98,11 @@ export default function TrackPage() {
 
           <div className="text-center py-2">
             <span className="text-3xl font-black text-white font-mono">
-              {(waterMl / 1000).toFixed(1)} L
+              {waterMl != null ? `${(waterMl / 1000).toFixed(1)} L` : '—'}
             </span>
-            <span className="text-xs text-[#8E98A0] block mt-0.5">Target: 2.8 L / day</span>
+            <span className="text-xs text-[#8E98A0] block mt-0.5">
+              {waterMl != null ? 'Target: 2.8 L / day' : 'Not logged yet today'}
+            </span>
           </div>
 
           <div className="grid grid-cols-2 gap-2">
@@ -125,10 +130,12 @@ export default function TrackPage() {
 
           <div className="text-center py-2">
             <span className="text-3xl font-black text-white font-mono">
-              {data?.todaysCheckin?.movement_duration_mins || 35} mins
+              {data?.todaysCheckin?.movement_duration_mins != null
+                ? `${data.todaysCheckin.movement_duration_mins} mins`
+                : '—'}
             </span>
             <span className="text-xs text-[#8E98A0] block mt-0.5">
-              {data?.todaysCheckin?.movement_type || 'Brisk Walking & Post-Meal'}
+              {data?.todaysCheckin?.movement_type || 'Not logged yet today'}
             </span>
           </div>
 
@@ -146,10 +153,12 @@ export default function TrackPage() {
 
           <div className="text-center py-2">
             <span className="text-3xl font-black text-white font-mono">
-              {data?.todaysCheckin?.sleep_hours || 6.5}h
+              {data?.todaysCheckin?.sleep_hours != null
+                ? `${data.todaysCheckin.sleep_hours}h`
+                : '—'}
             </span>
             <span className="text-xs text-[#2DD4BF] font-mono block mt-0.5">
-              {data?.todaysCheckin?.sleep_quality || 'Restful'}
+              {data?.todaysCheckin?.sleep_quality || 'Not logged yet today'}
             </span>
           </div>
 
@@ -184,26 +193,34 @@ export default function TrackPage() {
               </tr>
             </thead>
             <tbody className="divide-y divide-white/5 text-white/90">
-              {checkins.slice(0, 10).map((chk: any) => (
-                <tr key={chk.id} className="hover:bg-white/[0.02] transition-colors">
-                  <td className="py-3 px-3 font-mono text-[#8E98A0]">{chk.date}</td>
-                  <td className="py-3 px-3 font-mono">{chk.sleep_hours ? `${chk.sleep_hours}h` : '—'}</td>
-                  <td className="py-3 px-3 font-mono text-sky-400">
-                    {chk.water_ml ? `${(chk.water_ml / 1000).toFixed(1)}L` : '—'}
-                  </td>
-                  <td className="py-3 px-3 font-mono text-[#D8F224]">
-                    {chk.movement_duration_mins ? `${chk.movement_duration_mins}m` : '—'}
-                  </td>
-                  <td className="py-3 px-3">
-                    <span className="px-2 py-0.5 rounded bg-white/5 font-mono text-[11px]">
-                      {chk.meals_followed_plan || 'On plan'}
-                    </span>
-                  </td>
-                  <td className="py-3 px-3 font-mono">
-                    {chk.weight_kg ? `${chk.weight_kg} kg` : <span className="text-[#8E98A0]/60 italic">Skipped</span>}
+              {checkins.length === 0 ? (
+                <tr>
+                  <td colSpan={6} className="py-6 text-center text-[#8E98A0]">
+                    No daily check-ins recorded yet. Click &ldquo;Complete 60s Check-in&rdquo; to log today.
                   </td>
                 </tr>
-              ))}
+              ) : (
+                checkins.slice(0, 10).map((chk: any) => (
+                  <tr key={chk.id} className="hover:bg-white/[0.02] transition-colors">
+                    <td className="py-3 px-3 font-mono text-[#8E98A0]">{chk.date}</td>
+                    <td className="py-3 px-3 font-mono">{chk.sleep_hours ? `${chk.sleep_hours}h` : '—'}</td>
+                    <td className="py-3 px-3 font-mono text-sky-400">
+                      {chk.water_ml ? `${(chk.water_ml / 1000).toFixed(1)}L` : '—'}
+                    </td>
+                    <td className="py-3 px-3 font-mono text-[#D8F224]">
+                      {chk.movement_duration_mins ? `${chk.movement_duration_mins}m` : '—'}
+                    </td>
+                    <td className="py-3 px-3">
+                      <span className="px-2 py-0.5 rounded bg-white/5 font-mono text-[11px]">
+                        {chk.meals_followed_plan || 'On plan'}
+                      </span>
+                    </td>
+                    <td className="py-3 px-3 font-mono">
+                      {chk.weight_kg ? `${chk.weight_kg} kg` : <span className="text-[#8E98A0]/60 italic">Skipped</span>}
+                    </td>
+                  </tr>
+                ))
+              )}
             </tbody>
           </table>
         </div>

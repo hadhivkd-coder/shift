@@ -101,7 +101,7 @@ export default function AppShell({ children }: AppShellProps) {
             <div>
               <span className="font-black tracking-widest text-lg text-white">SHIFT</span>
               <span className="block text-[9px] uppercase tracking-widest text-[#D8F224] font-mono font-semibold">
-                Blueprint OS
+                The 20 KG Blueprint
               </span>
             </div>
           </Link>

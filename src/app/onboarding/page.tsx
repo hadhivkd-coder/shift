@@ -293,7 +293,7 @@ export default function OnboardingPage() {
                     type="text"
                     value={name}
                     onChange={e => setName(e.target.value)}
-                    placeholder="e.g. Hadhi Rahman"
+                    placeholder="e.g. Rahul Sharma"
                     className="w-full bg-[#11161A] border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-[#D8F224]"
                   />
                 </div>
@@ -303,7 +303,7 @@ export default function OnboardingPage() {
                     type="text"
                     value={preferredName}
                     onChange={e => setPreferredName(e.target.value)}
-                    placeholder="e.g. Hadhi"
+                    placeholder="e.g. Rahul"
                     className="w-full bg-[#11161A] border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-[#D8F224]"
                   />
                 </div>

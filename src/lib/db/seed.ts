@@ -26,14 +26,14 @@ export function seedDemoData() {
         VALUES (?, ?, ?, ?)
       `).run(
         'op_note_1',
-        'usr_demo_hadhi_2026',
+        'usr_demo_member_2026',
         coachId,
         'Member is doing exceptionally well with Plate and Repeat dials (5-day streaks). Fish allergy verified active. Recommending extra Kadala portion with breakfast Dosa to maintain afternoon satiety.'
       );
     } catch {}
   }
 
-  const existing = db.prepare('SELECT id FROM users WHERE email = ?').get('hadhi@example.com');
+  const existing = db.prepare('SELECT id FROM users WHERE email = ?').get('demo@shiftapp.io');
   if (existing) {
     seedCohortMembers();
     return;
@@ -44,7 +44,7 @@ export function seedDemoData() {
   const adminPasswordHash = bcrypt.hashSync('admin1234', salt);
   const coachPasswordHash = bcrypt.hashSync('demo1234', salt);
 
-  const hadhiId = 'usr_demo_hadhi_2026';
+  const demoMemberId = 'usr_demo_member_2026';
   const adminId = 'usr_demo_admin_2026';
   const coachId = 'usr_demo_coach_2026';
 
@@ -52,7 +52,7 @@ export function seedDemoData() {
   db.prepare(`
     INSERT INTO users (id, email, password_hash, role)
     VALUES (?, ?, ?, ?)
-  `).run(hadhiId, 'hadhi@example.com', userPasswordHash, 'user');
+  `).run(demoMemberId, 'demo@shiftapp.io', userPasswordHash, 'user');
 
   db.prepare(`
     INSERT INTO users (id, email, password_hash, role)
@@ -69,14 +69,14 @@ export function seedDemoData() {
     VALUES (?, ?, ?, ?)
   `).run(coachId, 'Coach Anjali', 'Anjali', 'Lead Wellness Concierge');
 
-  // Hadhi Profile
+  // Demo Member Profile
   db.prepare(`
     INSERT INTO profiles (user_id, name, preferred_name, dob, sex, country, state, city, timezone, occupation, work_schedule, routine)
     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
   `).run(
-    hadhiId,
-    'Hadhi Rahman',
-    'Hadhi',
+    demoMemberId,
+    'Kiran Kumar',
+    'Kiran',
     '1996-05-14',
     'Male',
     'India',
@@ -92,14 +92,14 @@ export function seedDemoData() {
   db.prepare(`
     INSERT INTO body_profiles (user_id, height_cm, weight_kg, waist_cm, hips_cm, body_fat_pct, weight_goal, desired_direction, activity_level, daily_steps_est, exercise_freq, bmi)
     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-  `).run(hadhiId, 176, 84.5, 92, 102, 24.5, 'Fat-loss & sustainable weight management', 'Gradual fat loss & strength maintenance', 'Moderate', 7500, '3 days/week', 27.3);
+  `).run(demoMemberId, 176, 84.5, 92, 102, 24.5, 'Fat-loss & sustainable weight management', 'Gradual fat loss & strength maintenance', 'Moderate', 7500, '3 days/week', 27.3);
 
   // Goals
   db.prepare(`
     INSERT INTO goals (user_id, primary_goals, success_definition, past_barriers)
     VALUES (?, ?, ?, ?)
   `).run(
-    hadhiId,
+    demoMemberId,
     JSON.stringify(['Weight management', 'Fat loss', 'Energy', 'Skin', 'Daily consistency']),
     'Fitting comfortably into my clothes, having sustained energy during afternoon coding without 4 PM brain fog, and building lifelong habits without giving up Kerala food.',
     JSON.stringify(['Lack of time', 'Late work shifts', 'Social dining on weekends', 'Inconsistent sleep'])
@@ -110,7 +110,7 @@ export function seedDemoData() {
     INSERT INTO health_screens (user_id, conditions, has_medication, medication_details, pregnant_or_postpartum, safety_status, safety_notes)
     VALUES (?, ?, ?, ?, ?, ?, ?)
   `).run(
-    hadhiId,
+    demoMemberId,
     JSON.stringify([]),
     'NO',
     '',
@@ -124,7 +124,7 @@ export function seedDemoData() {
     INSERT INTO allergy_profiles (user_id, allergies, intolerances, preferences, cultural_restrictions)
     VALUES (?, ?, ?, ?, ?)
   `).run(
-    hadhiId,
+    demoMemberId,
     JSON.stringify(['Fish', 'Shellfish']),
     JSON.stringify([]),
     JSON.stringify(['Non-vegetarian', 'Prefers home-cooked traditional meals']),
@@ -136,7 +136,7 @@ export function seedDemoData() {
     INSERT INTO food_profiles (user_id, dining_locations, outside_eating_freq, cook_source, favorite_foods, cuisine_preferences)
     VALUES (?, ?, ?, ?, ?, ?)
   `).run(
-    hadhiId,
+    demoMemberId,
     JSON.stringify(['Home', 'Office canteen']),
     '1-2 times per week',
     'Family and self',
@@ -149,7 +149,7 @@ export function seedDemoData() {
     INSERT INTO lifestyle_profiles (user_id, sleep_hours, bedtime, wake_time, sleep_consistency, water_liters, daily_steps, work_hours, screen_time, stress_level, smoking_status, alcohol_use, travel_freq, night_shift)
     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
   `).run(
-    hadhiId,
+    demoMemberId,
     6.5,
     '23:15',
     '06:45',
@@ -170,7 +170,7 @@ export function seedDemoData() {
     INSERT INTO skin_profiles (user_id, perceived_type, concerns, sensitivity, redness, sun_exposure, sunscreen_use, current_routine, product_allergies)
     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
   `).run(
-    hadhiId,
+    demoMemberId,
     'Combination',
     JSON.stringify(['Mild forehead breakouts', 'Afternoon oiliness', 'Sun protection in coastal humidity']),
     'Low',
@@ -186,7 +186,7 @@ export function seedDemoData() {
     INSERT INTO five_dials (user_id, dial_plate, dial_move, dial_lift, dial_rest, dial_repeat, plate_action, move_action, lift_action, rest_action, repeat_action, plate_streak, move_streak, lift_streak, rest_streak, repeat_streak)
     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
   `).run(
-    hadhiId,
+    demoMemberId,
     4, 4, 3, 3, 5,
     'Keep 1/2 plate thoran/vegetables with lunch and dinner',
     '15-minute post-lunch walk + 7,500 daily steps',
@@ -213,8 +213,8 @@ export function seedDemoData() {
       INSERT OR REPLACE INTO daily_checkins (id, user_id, date, sleep_hours, sleep_quality, water_ml, movement_type, movement_duration_mins, meals_followed_plan, energy_level, stress_level, weight_kg, waist_cm, mood, notes)
       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `).run(
-      `chk_${hadhiId}_${dateStr}`,
-      hadhiId,
+      `chk_${demoMemberId}_${dateStr}`,
+      demoMemberId,
       dateStr,
       parseFloat(sleep),
       i % 2 === 0 ? 'Good' : 'Restful',
@@ -237,8 +237,8 @@ export function seedDemoData() {
     INSERT INTO meal_logs (id, user_id, date, meal_type, food_items, portion_desc, protein_present, plants_present, hunger_before, fullness_after, notes)
     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
   `).run(
-    `meal_${hadhiId}_1`,
-    hadhiId,
+    `meal_${demoMemberId}_1`,
+    demoMemberId,
     todayStr,
     'Breakfast',
     '2 Dosas with 2 Boiled Eggs & Coconut Sambar',
@@ -250,8 +250,8 @@ export function seedDemoData() {
     INSERT INTO meal_logs (id, user_id, date, meal_type, food_items, portion_desc, protein_present, plants_present, hunger_before, fullness_after, notes)
     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
   `).run(
-    `meal_${hadhiId}_2`,
-    hadhiId,
+    `meal_${demoMemberId}_2`,
+    demoMemberId,
     todayStr,
     'Lunch',
     'Matta Rice, Kerala Spiced Chicken Roast, Cabbage Thoran & Fresh Curd',
@@ -274,7 +274,7 @@ export function seedDemoData() {
     INSERT INTO journey_progress (user_id, current_day, completed_days, streak, last_completed_at, reflections)
     VALUES (?, ?, ?, ?, ?, ?)
   `).run(
-    hadhiId,
+    demoMemberId,
     7,
     JSON.stringify(completedDays),
     6,
@@ -300,14 +300,14 @@ export function seedDemoData() {
     db.prepare(`
       INSERT INTO smart_groceries (id, user_id, category, item_name, quantity, purchased)
       VALUES (?, ?, ?, ?, ?, ?)
-    `).run(`groc_${Math.random().toString(36).substring(2, 9)}`, hadhiId, g.cat, g.name, g.qty, g.purchased);
+    `).run(`groc_${Math.random().toString(36).substring(2, 9)}`, demoMemberId, g.cat, g.name, g.qty, g.purchased);
   }
 
   // Consents
   db.prepare(`
     INSERT INTO consents (user_id, health_profile_consent, recommendations_consent, analytics_consent)
     VALUES (?, 1, 1, 0)
-  `).run(hadhiId);
+  `).run(demoMemberId);
 
   // Seed sample operator notes & custom actions
   db.prepare(`
@@ -315,7 +315,7 @@ export function seedDemoData() {
     VALUES (?, ?, ?, ?)
   `).run(
     'op_note_1',
-    hadhiId,
+    demoMemberId,
     coachId,
     'Member is doing exceptionally well with Plate and Repeat dials (5-day streaks). Fish allergy verified active. Recommending extra Kadala portion with breakfast Dosa to maintain afternoon satiety.'
   );
@@ -325,7 +325,7 @@ export function seedDemoData() {
     VALUES (?, ?, ?, ?, ?, ?, ?)
   `).run(
     'op_act_1',
-    hadhiId,
+    demoMemberId,
     coachId,
     'PLATE',
     'Add Kadala or boiled eggs to morning Dosa',
@@ -337,7 +337,7 @@ export function seedDemoData() {
   db.prepare(`
     INSERT INTO audit_logs (id, user_id, action, details)
     VALUES (?, ?, ?, ?)
-  `).run('aud_seed_1', hadhiId, 'INITIAL_HEALTH_PROFILE_CREATED', 'Demo user Hadhi seeded with complete 20 KG Blueprint profile.');
+  `).run('aud_seed_1', demoMemberId, 'INITIAL_HEALTH_PROFILE_CREATED', 'Demo user Kiran Kumar seeded with complete 20 KG Blueprint profile.');
 
   seedCohortMembers();
 }

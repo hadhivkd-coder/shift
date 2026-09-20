@@ -59,7 +59,7 @@ async function runTests() {
   assert(!isMealSafe(dairyMeal, ['dairy'], [], []), 'Paneer meal is strictly rejected for dairy-allergic user');
 
   const userContext = {
-    name: 'Hadhi',
+    name: 'Kiran',
     primaryGoals: ['Fat loss'],
     allergies: ['fish', 'shellfish'],
     intolerances: [],

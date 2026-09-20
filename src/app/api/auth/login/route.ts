@@ -15,7 +15,7 @@ export async function POST(req: Request) {
           ? 'admin@shift.health'
           : demoType === 'operator'
           ? 'coach@shift.health'
-          : 'hadhi@example.com';
+          : 'demo@shiftapp.io';
       const user = db.prepare('SELECT id, email, role FROM users WHERE email = ?').get(demoEmail) as { id: string; email: string; role: string } | undefined;
       
       if (!user) {

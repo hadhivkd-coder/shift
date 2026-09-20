@@ -82,7 +82,7 @@ export default function ProfilePage() {
         <div className="flex items-start justify-between pb-4 border-b border-white/10">
           <div>
             <h2 className="text-2xl sm:text-3xl font-black text-white">
-              {profile?.name || data?.user?.name || 'Hadhi Rahman'}
+              {profile?.name || data?.user?.name || 'Rahul Sharma'}
             </h2>
             <p className="text-xs text-[#D8F224] font-mono mt-0.5">
               {profile?.occupation || 'Member'} • {profile?.city || 'Kochi'}, {profile?.country || 'India'}

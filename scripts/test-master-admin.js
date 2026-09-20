@@ -100,7 +100,7 @@ async function testMasterAdmin() {
   const memberLogin = await fetch(`${baseUrl}/api/auth/login`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ isDemo: true, demoType: 'hadhi' }),
+    body: JSON.stringify({ isDemo: true, demoType: 'member' }),
   });
   const memberCookie = memberLogin.headers.get('set-cookie');
   const memberMe = await fetch(`${baseUrl}/api/auth/me`, {

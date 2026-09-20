@@ -82,7 +82,7 @@ export default function DashboardPage() {
           <h1 className="text-3xl sm:text-5xl font-black text-white tracking-tight mt-1">
             Good Morning,{' '}
             <span className="text-[#D8F224]">
-              {profile?.preferred_name || profile?.name || user?.preferredName || 'Hadhi'}
+              {profile?.preferred_name || profile?.name || user?.preferredName || 'Member'}
             </span>
           </h1>
           <p className="text-xs sm:text-sm text-[#8E98A0] mt-1 font-medium">

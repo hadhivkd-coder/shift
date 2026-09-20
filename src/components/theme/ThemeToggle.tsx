@@ -26,12 +26,12 @@ export default function ThemeToggle({ showLabel = false, className = '' }: Theme
       {theme === 'light' ? (
         <>
           <Sun className="w-4 h-4 text-[#C27803] transition-transform duration-300 rotate-0" />
-          {showLabel && <span className="text-xs font-mono font-bold text-[#3D372E]">Warm Light</span>}
+          {showLabel && <span className="text-xs font-mono font-bold text-[#3D372E]">Theme: Light</span>}
         </>
       ) : (
         <>
           <Moon className="w-4 h-4 text-[#D8F224] transition-transform duration-300 -rotate-12" />
-          {showLabel && <span className="text-xs font-mono font-bold text-[#F3F4F6]">Dark Mode</span>}
+          {showLabel && <span className="text-xs font-mono font-bold text-[#F3F4F6]">Theme: Dark</span>}
         </>
       )}
     </button>
