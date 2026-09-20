@@ -1,0 +1,212 @@
+@import "tailwindcss";
+
+@layer base {
+  :root,
+  [data-theme="light"] {
+    --bg-main: #F7F4EE; /* Soft warm oat/linen */
+    --bg-card: #FFFFFF; /* Pure card surface */
+    --bg-card-subtle: #F2ECE1; /* Subtle warm cream */
+    --bg-elevated: #EBE4D5; /* Elevated surface */
+    --border-subtle: rgba(45, 38, 30, 0.1);
+    --border-highlight: rgba(90, 110, 5, 0.35);
+    --text-main: #201C18; /* Rich warm espresso */
+    --text-muted: #726A61; /* Soft warm taupe */
+    --accent-electric: #556B00; /* Warm forest lime for contrast */
+    --accent-electric-bg: #EAF3B2;
+    --accent-coral: #C73830;
+    --accent-teal: #1F7D70;
+    --accent-amber: #B86B04;
+  }
+
+  [data-theme="dark"] {
+    --bg-main: #07090A;
+    --bg-card: #0F1316;
+    --bg-card-subtle: #151A1E;
+    --bg-elevated: #1B2227;
+    --border-subtle: rgba(255, 255, 255, 0.08);
+    --border-highlight: rgba(216, 242, 36, 0.25);
+    --text-main: #F3F4F6;
+    --text-muted: #8E98A0;
+    --accent-electric: #D8F224;
+    --accent-electric-bg: rgba(216, 242, 36, 0.15);
+    --accent-coral: #FF5A52;
+    --accent-teal: #2DD4BF;
+    --accent-amber: #F59E0B;
+  }
+
+  body {
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    font-family: var(--font-geist-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+}
+
+/* ========================================================================= */
+/* WARM LIGHT THEME COMPREHENSIVE OVERRIDES (Calm, Soft, Warm Linen Tone)   */
+/* ========================================================================= */
+
+[data-theme="light"] {
+  background-color: #F7F4EE !important;
+  color: #201C18 !important;
+}
+
+[data-theme="light"] body {
+  background-color: #F7F4EE !important;
+  color: #201C18 !important;
+}
+
+/* Background overrides */
+[data-theme="light"] .bg-\[\#07090A\],
+[data-theme="light"] .bg-\[\#07090B\],
+[data-theme="light"] .bg-\[\#080A0C\],
+[data-theme="light"] .bg-\[\#0A0D10\] {
+  background-color: #F7F4EE !important;
+}
+
+[data-theme="light"] .bg-\[\#0B0F12\],
+[data-theme="light"] .bg-\[\#0A0E12\],
+[data-theme="light"] .bg-\[\#0B0F13\] {
+  background-color: #F0EAE0 !important;
+}
+
+[data-theme="light"] .bg-\[\#0E1317\],
+[data-theme="light"] .bg-\[\#0F1316\],
+[data-theme="light"] .bg-\[\#0F1418\],
+[data-theme="light"] .bg-\[\#0F1317\],
+[data-theme="light"] .bg-\[\#0E1419\] {
+  background-color: #FFFFFF !important;
+  box-shadow: 0 1px 3px rgba(35, 30, 20, 0.05), 0 1px 2px rgba(35, 30, 20, 0.03);
+}
+
+[data-theme="light"] .bg-\[\#141A1F\],
+[data-theme="light"] .bg-\[\#151C22\],
+[data-theme="light"] .bg-\[\#151A1E\],
+[data-theme="light"] .bg-\[\#161C21\],
+[data-theme="light"] .bg-\[\#11161B\] {
+  background-color: #F3ECE1 !important;
+}
+
+/* Text color overrides */
+[data-theme="light"] .text-white {
+  color: #1F1B17 !important;
+}
+
+[data-theme="light"] .text-white\/90,
+[data-theme="light"] .text-white\/80 {
+  color: #2D2722 !important;
+}
+
+[data-theme="light"] .text-white\/70,
+[data-theme="light"] .text-white\/60,
+[data-theme="light"] .text-white\/50,
+[data-theme="light"] .text-white\/40,
+[data-theme="light"] .text-white\/30,
+[data-theme="light"] .text-\[\#8E98A0\] {
+  color: #726A61 !important;
+}
+
+[data-theme="light"] .text-\[\#F3F4F6\] {
+  color: #201C18 !important;
+}
+
+/* Border overrides */
+[data-theme="light"] .border-white\/10,
+[data-theme="light"] .border-white\/5,
+[data-theme="light"] .border-white\/20,
+[data-theme="light"] .border-white\/30,
+[data-theme="light"] .divide-white\/5,
+[data-theme="light"] .divide-white\/10 {
+  border-color: #E6DFD3 !important;
+}
+
+/* Translucent surfaces */
+[data-theme="light"] .bg-white\/\[0\.02\],
+[data-theme="light"] .bg-white\/\[0\.03\],
+[data-theme="light"] .bg-white\/\[0\.04\],
+[data-theme="light"] .bg-white\/\[0\.05\],
+[data-theme="light"] .bg-white\/5 {
+  background-color: #EDE6D8 !important;
+}
+
+[data-theme="light"] .bg-white\/10 {
+  background-color: #E5DFC8 !important;
+}
+
+[data-theme="light"] .bg-white\/\[0\.08\],
+[data-theme="light"] .hover\:bg-white\/\[0\.04\]:hover,
+[data-theme="light"] .hover\:bg-white\/\[0\.03\]:hover,
+[data-theme="light"] .hover\:bg-white\/5:hover,
+[data-theme="light"] .hover\:bg-white\/10:hover {
+  background-color: #E5DDCB !important;
+}
+
+/* Accent overrides for high readability and warmth */
+[data-theme="light"] .text-\[\#D8F224\] {
+  color: #556B00 !important;
+}
+
+[data-theme="light"] .bg-\[\#D8F224\] {
+  background-color: #D6EB28 !important;
+  color: #1A2000 !important;
+}
+
+[data-theme="light"] .border-\[\#D8F224\] {
+  border-color: #769004 !important;
+}
+
+[data-theme="light"] .border-\[\#D8F224\]\/20,
+[data-theme="light"] .border-\[\#D8F224\]\/30 {
+  border-color: rgba(118, 144, 4, 0.35) !important;
+}
+
+[data-theme="light"] .bg-\[\#D8F224\]\/10,
+[data-theme="light"] .bg-\[\#D8F224\]\/15,
+[data-theme="light"] .bg-\[\#D8F224\]\/20 {
+  background-color: #EBF3B5 !important;
+  color: #465700 !important;
+}
+
+/* Header blurs */
+[data-theme="light"] header.bg-\[\#07090A\]\/90,
+[data-theme="light"] header.bg-\[\#07090B\]\/90 {
+  background-color: rgba(247, 244, 238, 0.92) !important;
+  border-bottom-color: #E6DFD3 !important;
+}
+
+/* Input fields */
+[data-theme="light"] input,
+[data-theme="light"] select,
+[data-theme="light"] textarea {
+  color: #1F1B17 !important;
+  background-color: #F4EFE5 !important;
+  border-color: #DCD4C5 !important;
+}
+
+[data-theme="light"] input::placeholder,
+[data-theme="light"] textarea::placeholder {
+  color: #8A8177 !important;
+}
+
+/* Drawer & Modals */
+[data-theme="light"] .fixed.inset-0 .bg-\[\#0B0F13\],
+[data-theme="light"] .fixed.inset-0 .bg-\[\#0F1418\] {
+  background-color: #FAF7F2 !important;
+  border-color: #E6DFD3 !important;
+}
+
+/* Hide scrollbar */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.dial-ring-circle {
+  transition: stroke-dashoffset 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
